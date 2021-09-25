@@ -1,10 +1,23 @@
 from django.shortcuts import render
 
-'''this is a inbuilt django Views class that handles the remdering of views that are built in to the django web framework'''
-from django.views.generic import View
+from django.http import HttpResponse
 
+from . models import Project
 # Create your views here.
-class Home(View):
-    #this class will be responsible for showing the developer page
-    def get(self, request):
-        return render(request, 'home.html')
+
+def projects(request):
+    projects = Project.objects.all()
+    data_for_front_end = {
+        'projects' : projects,
+    }
+    return render(request, 'projects/projects_list.html', data_for_front_end)
+
+def project(request, pk):
+    projectObj = Project.objects.get(id=pk)
+    tags = projectObj.tags.all()
+
+    data_for_front_end = {
+        'projectObj':projectObj,
+        'tags':tags,
+    }
+    return render(request, 'projects/single-project.html', data_for_front_end)

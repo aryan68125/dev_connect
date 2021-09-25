@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <h1>{{projectObj.title}}</h1>
+  <p>{{projectObj.discription}}</p>
+  <p>{{projectObj.vote_total}}</p>
+  <p>{{projectObj.vote_ratio}}</p>
+  <hr>
+  {% for tag in projectObj.tags.all %}
+      <p style = "border: 1px solid grey">{{tag}}</p>
+  {% endfor %}
+  <p>{{projectObj.created}}</p>
+  <hr>
+{% endblock content %}
