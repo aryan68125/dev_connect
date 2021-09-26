@@ -26,5 +26,5 @@ urlpatterns = [
     path('', include('projects.urls')),
 ]
 
-#added a media url route to this file so that django knows how to fetch user uploaded images for the front end 
+#added a media url route to this file so that django knows how to fetch user uploaded images for the front end...
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
