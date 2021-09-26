@@ -1,11 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <h1>Developer forum</h1>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!---create afilepath to our main.css in the static/styles/main.css folder--->
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" type="text/css" media="screen" >
   </head>
   <body>
     {% include 'navbar.html' %}

@@ -23,4 +23,13 @@ urlpatterns = [
     path('', views.projects , name='projects'),
     path('project/<str:pk>/', views.project , name='project'),
 
+    #create a project
+    path('create-project/', views.createProject , name='create-project'),
+
+    #update an existing project
+    path('update-project/<str:pk>/', views.updateProject , name='update-project'),
+
+    #delete a project from the database
+    path('delete-project/<str:pk>/', views.deleteProject , name='delete-project'),
+
 ]
