@@ -124,11 +124,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#configure MEDIA_URL so that we can connect and display the uploaded image that is present in the static/images folder to our front end from the static folder via models.py file since our images url are gonna be dynamic
+MEDIA_URL = '/images/'
+
 #now add the static urls here for this website
 #static is like graphics icons and all that stuff for your website including your flex boxes
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+#configuring the path where the images should be stored when a user uploads his/her images into the website
+#by default the images uploaded by the user will be stored in the root directory of the project
+#but we want django to store our images uploaded by the users into this path (static/images/)
+#MEDIA_ROOT simply tells django where to store user uploaded content
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

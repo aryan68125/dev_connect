@@ -34,7 +34,7 @@ def createProject(request):
     if request.method == 'POST':
         #for debugging
         print(request.POST)
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES) #request.FILES will get the images uploaded by the users from the front end and now the links of those images can be saved in the database
         if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
             form.save()
             return redirect('projects')
@@ -54,7 +54,7 @@ def updateProject(request, pk):
     if request.method == 'POST':
         #for debugging
         print(request.POST)
-        form = ProjectForm(request.POST , instance = project) # here pass request.POST along with what project are we updating at the moment instance = project
+        form = ProjectForm(request.POST , request.FILES , instance = project) # here pass request.POST along with what project are we updating at the moment instance = project
         if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
             form.save()
             return redirect('projects')

@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
 <h1>Projects list</h1>
 <hr>
@@ -21,7 +22,7 @@
     <td>{{project.created}}</td>
     <td><a href="{% url 'project' project.id %}">View Details</a></td>
     <td><a href="{% url 'update-project' project.id %}">Edit</a></td>
-    <td><a href="{% url 'delete-project' project.id %}">Delete</a></td>    
+    <td><a href="{% url 'delete-project' project.id %}">Delete</a></td>
   </tr>
   {% endfor %}
 </table>

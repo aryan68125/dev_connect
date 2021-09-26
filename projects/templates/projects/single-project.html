@@ -1,6 +1,9 @@
 {% extends 'main.html' %}
-
+{% load static %}
 {% block content %}
+  <!---now here we will show the image related to the project that will be uploaded by the user to the website--->
+  <!---to show images in the front end we will use models.py attribute featured_image that we just created in our models.py--->
+  <img src = "{{ projectObj.featured_image.url }}">
   <h1>{{projectObj.title}}</h1>
   <p>{{projectObj.discription}}</p>
   <p>{{projectObj.vote_total}}</p>

@@ -14,6 +14,9 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True , primary_key=True, editable=False) #overriding django unique database items id
 
+    #models for user uploaded files
+    featured_image = models.ImageField(null=True, blank=True, default="default.png")
+
     def __str__(self):
         return self.title
 
