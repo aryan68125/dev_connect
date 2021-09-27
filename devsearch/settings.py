@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #developer created apps in django are defined here
     'projects',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +56,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #whitenoise for serving our static files in production environment
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'devsearch.urls'
@@ -133,6 +139,11 @@ MEDIA_URL = '/images/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+#STATIC_ROOT defines where our static files in production are gonna be when I say production that means we will be setting debugging= False
+#collect static is a command that we will use to run STATIC_ROOT
+#collect static is a command that will tell django to take all the files in the static folder and its gonna bundle them up in one file and django can take care of that from there
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 #configuring the path where the images should be stored when a user uploads his/her images into the website
 #by default the images uploaded by the user will be stored in the root directory of the project

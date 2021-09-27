@@ -2,8 +2,11 @@ from django.db import models
 
 import uuid
 
+from users.models import Profile #import Profile model from users moddels.py file
 # Create your models here.
 class Project(models.Model):
+
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE) #ForeignKey stablishes one to many relationship #-> by doing this we are gonna connect a project to the user that actually had created it
     tags = models.ManyToManyField('Tag', blank=True) #setting many to many relationship between tags and the Project model in the database the Tag model is below the Project model that's why we are putthing Tag inside the '' like this 'Tag'
     vote_total = models.IntegerField(default=0, null=True, blank=True)
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)

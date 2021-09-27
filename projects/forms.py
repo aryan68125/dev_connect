@@ -2,9 +2,37 @@
 from django.forms import ModelForm
 from . models import Project
 
+#do an import that will allow us to customise our default form template provided by django so that we can apply our custom theme on that form
+from django import forms
+
 #to create a model from I am going to create a simple class here
 class ProjectForm(ModelForm):
     # at a minimum the model form is gonna require two fields 1. a model that we are gonna create a from for and
     class Meta:
         model = Project
         fields = ['title', 'discription', 'demo_link', 'source_link', 'tags', 'featured_image',]
+
+        #customizing widgets so that we can apply our theme in this model form provided by django
+        #this will allow us to change the tag input field from a select box to a multiple checkBox where we don not have to press ctrl and left mouse click to select a tag
+        #we can select the tag via left mouse click
+        #so basically we are changing the default looks of this model form one by one by field
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }
+
+    # this is one way to customize our model forms provided by django
+    #add a class to the field of models form so that it can be styled by our css file just like we style our html using html and css classes
+    #def __init__(self,*args,**kwargs):
+    #    super(ProjectForm,self).__init__(*args,**kwargs) #telling it which class to modify
+    #    self.fields['title'].widget.attrs.update(
+    #        {
+    #           'class':'input' , #'class (python class): 'input (css class)'
+    #           'placeholder': 'Add your project title' ,
+    #        }
+    #    )
+    def __init__(self,*args,**kwargs):
+        super(ProjectForm,self).__init__(*args,**kwargs)   
+        for name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class':'input',
+            })

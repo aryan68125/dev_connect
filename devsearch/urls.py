@@ -23,8 +23,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('projects.urls')),
+    path('projects/', include('projects.urls')),
+
+    path('', include('users.urls')),
 ]
 
 #added a media url route to this file so that django knows how to fetch user uploaded images for the front end
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+#added a STATIC url route to this file so that django knows how to serve static files to the front end when debugging is set to false in the settings.py i.e when we are in a production environment
+#the next step is to install a third party package called django white noise
+#then type 'whitenoise.middleware.WhiteNoiseMiddkeware' in the middleware sections of settings.py file
+urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
