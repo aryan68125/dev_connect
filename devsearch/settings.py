@@ -44,8 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #developer created apps in django are defined here
-    'projects',
-    'users',
+    'projects.apps.ProjectsConfig',
+    'users.apps.UsersConfig',
+    #do not add your apps here like
+    #'projects',
+    #'users',
 ]
 
 MIDDLEWARE = [
