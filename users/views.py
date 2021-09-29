@@ -98,6 +98,7 @@ class RegistrationView(View):
         user.save() # now we can say that the user account is successfully created
         #now add a message informing the user that their account has been created successfully
         messages.add_message(request,messages.SUCCESS, 'Account is created successfully')
+        messages.add_message(request,messages.SUCCESS, 'Activation link is sent check your email')
 
         #send the verification link to the user's email address
         #step1. construct a url that is unique to the application that we've built so we need the the current domain that our application is running on
