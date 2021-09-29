@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, null=True,blank=True) #connect this model via one to one relation to the inbuilt django's User model
                                                                   #on_delete = models.CASCADE will make sure that any time the user is deleted the profile is deleted
-    name = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True) #name is set from User model via signals here we renamed First_name in User model to name in the Profile model
     email = models.EmailField(max_length=500,null=True, blank=True)
     short_intro = models.CharField(max_length=900, blank=True, null=True)
     bio = models.TextField(null=True, blank=True)

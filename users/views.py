@@ -98,9 +98,11 @@ class RegistrationView(View):
         if stuff_for_frontend['has_error']:
             return render(request, 'users/register.html', stuff_for_frontend, status=400) #here if we set status to 400 that meands we can prevent the user profile from being created in the database if the error is generated if any of our test condition fails
 
+        #get the first_name from the front_end of the user
+        first_name = request.POST.get('first_name')
 
         #now create the user in the database
-        user = User.objects.create_user(username=username, email=email)
+        user = User.objects.create_user(username=username, email=email, first_name=first_name)
         #now set the password for that user and store it in the database
         user.set_password(password)
         #set active user to false so that they don't accidentally get logged in before the email verification process is complete
