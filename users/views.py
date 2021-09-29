@@ -192,7 +192,10 @@ def loginUser(request):
 
         else: # if the user in None i.e the user exist in the database but either the password or the username do not match from the database then tell the user that either the username or password is incorrect
             print('username or password is incorrect')
-            messages.error(request,'usename or password is incorrect')
+            if user.is_active:
+                messages.error(request,'usename or password is incorrect')
+            else:
+                messages.error(request,'Please verify your email before login')
 
     return render(request, 'users/login_register.html')
 
