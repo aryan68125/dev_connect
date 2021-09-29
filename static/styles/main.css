@@ -1,0 +1,17 @@
+h1{
+  color:RED;
+}
+.website-main-logo-navbar-dev{
+  height: 200px;
+  width: 200px;
+}
+
+.website-main-logo-navbar-icon{
+  height: 200px;
+  width: 240px;
+}
+
+.container-navbar{
+  display: flex;
+  background-color: #a2b9bc;
+}

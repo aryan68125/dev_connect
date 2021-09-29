@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-box">
+  <div>
+  <h2>email verification failed!</h2>
+</div>
+  <a href="{% url 'register' %}">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <p  class = "text-center">register your account with a different email address</p>
+  </a>
+</div>
+{% endblock %}

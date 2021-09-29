@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    h1 {
+        color: green;
+    }
+
+    /* Styling the button */
+    .btn {
+        cursor: pointer;
+        border: 1px solid #3498db;
+        background-color: transparent;
+        height: 50px;
+        width: 200px;
+        color: #3498db;
+        font-size: 1.5em;
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    }
+</style>
+
+<div class="login-box">
+  <h2>Register</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    <!---message box--->
+    {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-info">
+            {{ message }}
+          </div>
+          {% endfor %}
+    {% endif %}
+
+    <div class="user-box">
+      <input type="text" name="username" required="">
+      <label>Username</label>
+    </div>
+    <div class="user-box">
+      <input type="email" name="email" required="">
+      <label>email address</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="password">
+      <label for="">Password</label>
+    </div>
+    <a href="">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button class ='btn' type="submit">Register</button>
+    </a>
+    <a href="{%url 'login'%}">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Already have an account?
+    </a>
+  </form>
+{% endblock %}
