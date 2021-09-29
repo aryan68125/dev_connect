@@ -59,9 +59,14 @@ class RegistrationView(View):
         }
 
         #now check if the passwords are provided
-        password = request.POST.get('password')
-        if len(password)<6:
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if len(password1)<6:
             messages.add_message(request,messages.ERROR, 'Password should be atleast 6 characters long')
+            stuff_for_frontend['has_error'] = True
+
+        if password2 == password1:
+            messages.add_message(request,messages.ERROR, 'Password do not match')
             stuff_for_frontend['has_error'] = True
 
         #now we need to validate the email address entered by the user so inorder to do that we need to install validate-email module from pip repository
