@@ -4,15 +4,6 @@
   <form method="post">
     {% csrf_token %}
 
-    <!---message box--->
-    {% if messages %}
-          {% for message in messages %}
-          <div class="alert alert-info">
-            {{ message }}
-          </div>
-          {% endfor %}
-    {% endif %}
-
     <input type="text" name = "username" placeholder="Username"/>
     <input type="email" name = "email" placeholder="email address"/>
     <input type="password" name = "password1" placeholder="Password"/>
