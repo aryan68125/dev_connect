@@ -4,11 +4,11 @@
   <form method="post">
     {% csrf_token %}
 
-    <input type="text" name = "username" placeholder="Username" value="{{data.username}}"/>
-    <input type="email" name = "email" placeholder="email address" value="{{data.email}}"/>
-    <input type="password" name = "password" placeholder="Password"/>
-    <input type="password" name = "password2" placeholder="Confirm Password"/>
-    <input type="submit" value="Register" />
+    <p><input type="text" name = "username" placeholder="Username" value="{{data.username}}"/></p>
+    <p><input type="email" name = "email" placeholder="email address" value="{{data.email}}"/></p>
+    <p><input type="password" name = "password" placeholder="Password"/></p>
+    <p><input type="password" name = "password2" placeholder="Confirm Password"/></p>
+    <p><input type="submit" value="Register" /></p>
     <p>
       Already have an account?
       <a href="{%url 'login'%}">

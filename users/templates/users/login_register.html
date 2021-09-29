@@ -3,9 +3,9 @@
   <h2>Login</h2>
 <form method="POST" action="{% url 'login' %}">
      {% csrf_token %}
-      <input type="text" name = "username" placeholder="Username"/>
-      <input type="password" name = "password" placeholder="Password"/>
-      <input type="submit" value="Login" />
+      <p><input type="text" name = "username" placeholder="Username"/></p>
+      <p><input type="password" name = "password" placeholder="Password"/></p>
+      <p><input type="submit" value="Login" /></p>
       <p>
         Don't have an account?
         <a href="{%url 'register'%}">
