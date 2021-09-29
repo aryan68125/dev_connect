@@ -49,11 +49,14 @@ from django.contrib import messages
 class RegistrationView(View):
     #to handle the get request
     def get(self, request):
+        #Restrict the user who is already logged in from seeing the login page
+        if request.user.is_authenticated:
+            return redirect('profiles')
         return render(request, 'users/register.html')
 
     def post(self, request):
         #now we need to go back to the template register otherwise we won't be able to create th user in the database
-        data = request.POST,
+        data = request.POST
         stuff_for_frontend = {
 
               'data' : data,
@@ -63,8 +66,13 @@ class RegistrationView(View):
 
         #now check if the passwords are provided
         password = request.POST.get('password')
+        password2 = request.POST.get('password2')
         if len(password)<6:
             messages.add_message(request,messages.ERROR, 'Password should be atleast 6 characters long')
+            stuff_for_frontend['has_error'] = True
+        #check if the both password and password2 are matching or not
+        if password!= password2:
+            messages.add_message(request,messages.ERROR, "Password don't match")
             stuff_for_frontend['has_error'] = True
 
         #now we need to validate the email address entered by the user so inorder to do that we need to install validate-email module from pip repository
