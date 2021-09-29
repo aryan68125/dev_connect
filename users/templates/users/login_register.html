@@ -6,9 +6,12 @@
       <input type="text" name = "username" placeholder="Username"/>
       <input type="password" name = "password" placeholder="Password"/>
       <input type="submit" value="Login" />
-      <a href="{%url 'register'%}">
+      <p>
         Don't have an account?
-      </a>
+        <a href="{%url 'register'%}">
+          Sign up
+        </a>
+      </p>
       <a href="{%url 'request-reset-email'%}">
         Forgot password?
       </a>
