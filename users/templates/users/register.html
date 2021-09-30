@@ -3,10 +3,37 @@
   <h2>Register</h2>
   <form method="post">
     {% csrf_token %}
+    <p>
 
+      <label for="username">
+              Username:
+      </label>
+
+    </p>
     <p><input type="text" name = "username" placeholder="Username" value="{{data.username}}"/></p>
+    <p>
+
+      <label for="first_name">
+              Your full name:
+      </label>
+
+    </p>
     <p><input type="text" name = "first_name" placeholder="Your Full name" value="{{data.first_name}}"/></p>
+    <p>
+
+      <label for="email">
+              Your email address:
+      </label>
+
+    </p>
     <p><input type="email" name = "email" placeholder="email address" value="{{data.email}}"/></p>
+    <p>
+
+      <label for="password">
+              Password:
+      </label>
+
+    </p>
     <p><input type="password" name = "password" placeholder="Password"/></p>
     <p><input type="password" name = "password2" placeholder="Confirm Password"/></p>
     <p><input type="submit" value="Register" /></p>
