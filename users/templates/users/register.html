@@ -1,50 +1,89 @@
 {% extends "main.html" %}
+{% load static %}
 {% block content %}
-  <h2>Register</h2>
-  <form method="post">
-    {% csrf_token %}
-    <p>
 
-      <label for="username">
-              Username:
-      </label>
+  <div class="auth">
+    <div class="card" style = "background-color: #d5e1df;">
+      <div class="auth__header text-center">
+        <a href="/">
+          <img  src="{% static 'images/google-developers-1.svg' %}" style="height: 100px; width: 100px;" alt="icon" />
+        </a>
+        <h3>Account SignUp</h3>
+        <p>Create a new developer account</p>
+      </div>
 
-    </p>
-    <p><input type="text" name = "username" placeholder="Username" value="{{data.username}}"/></p>
-    <p>
+      <form action="#" class="form auth__form" method="post">
+        {% csrf_token %}
+        <!-- Input:Text -->
+        <div class="form__field">
+          <label for="formInput#text">Username: </label>
+          <input
+            class="input input--text"
+            id="formInput#text"
+            type="text"
+            name="username"
+            placeholder="e.g. yourname_12345"
+            value="{{data.username}}"
+          />
+        </div>
 
-      <label for="first_name">
-              Your full name:
-      </label>
+        <div class="form__field">
+          <label for="formInput#text">Full Name: </label>
+          <input
+            class="input input--text"
+            id="formInput#text"
+            type="text"
+            name="first_name"
+            placeholder="e.g. Aditya Kumar"
+            value="{{data.first_name}}"
+          />
+        </div>
 
-    </p>
-    <p><input type="text" name = "first_name" placeholder="Your Full name" value="{{data.first_name}}"/></p>
-    <p>
+        <!-- Input:Email -->
+        <div class="form__field">
+          <label for="formInput#email">Email Address: </label>
+          <input
+            class="input input--email"
+            id="formInput#email"
+            type="email"
+            name="email"
+            placeholder="e.g. user@domain.com"
+            value="{{data.email}}"
+          />
+        </div>
 
-      <label for="email">
-              Your email address:
-      </label>
+        <!-- Input:Password -->
+        <div class="form__field">
+          <label for="formInput#password">Password: </label>
+          <input
+            class="input input--password"
+            id="formInput#passowrd"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+          />
+        </div>
+        <!-- Input:Password -->
+        <div class="form__field">
+          <label for="formInput#confirm-password">Confirm Password: </label>
+          <input
+            class="input input--password"
+            id="formInput#confirm-passowrd"
+            type="password"
+            name="password2"
+            placeholder="••••••••"
+          />
+        </div>
 
-    </p>
-    <p><input type="email" name = "email" placeholder="email address" value="{{data.email}}"/></p>
-    <p>
+        <div class="auth__actions">
+          <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+        </div>
 
-      <label for="password">
-              Password:
-      </label>
-
-    </p>
-    <p><input type="password" name = "password" placeholder="Password"/></p>
-    <p><input type="password" name = "password2" placeholder="Confirm Password"/></p>
-    <p><input type="submit" value="Register" /></p>
-    <p>
-      Already have an account?
-      <a href="{%url 'login'%}">
-        Login
-      </a>
-    </p>
-    <a href="#">
-      Know more about us
-    </a>
-  </form>
+      </form>
+      <div class="auth__alternative">
+        <p>Already have an Account?</p>
+        <a href="{%url 'login'%}">Log In</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

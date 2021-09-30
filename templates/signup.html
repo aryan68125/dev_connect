@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+
+    <div class="auth">
+      <div class="card">
+        <div class="auth__header text-center">
+          <a href="/">
+            <img src="images/icon.svg" alt="icon" />
+          </a>
+          <h3>Account SignUp</h3>
+          <p>Create a new developer account</p>
+        </div>
+
+        <form action="#" class="form auth__form">
+          <!-- Input:Text -->
+          <div class="form__field">
+            <label for="formInput#text">Full Name: </label>
+            <input
+              class="input input--text"
+              id="formInput#text"
+              type="text"
+              name="text"
+              placeholder="e.g. Dennis Ivanov"
+            />
+          </div>
+
+          <!-- Input:Email -->
+          <div class="form__field">
+            <label for="formInput#email">Email Address: </label>
+            <input
+              class="input input--email"
+              id="formInput#email"
+              type="email"
+              name="email"
+              placeholder="e.g. user@domain.com"
+            />
+          </div>
+
+          <!-- Input:Password -->
+          <div class="form__field">
+            <label for="formInput#password">Password: </label>
+            <input
+              class="input input--password"
+              id="formInput#passowrd"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+            />
+          </div>
+          <!-- Input:Password -->
+          <div class="form__field">
+            <label for="formInput#confirm-password">Confirm Password: </label>
+            <input
+              class="input input--password"
+              id="formInput#confirm-passowrd"
+              type="password"
+              name="confirm-password"
+              placeholder="••••••••"
+            />
+          </div>
+          <div class="auth__actions">
+            <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+          </div>
+        </form>
+        <div class="auth__alternative">
+          <p>Already have an Account?</p>
+          <a href="login.html">Log In</a>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+temp
+<h2>Register</h2>
+<form method="post">
+  {% csrf_token %}
+  <p>
+
+    <label for="username">
+            Username:
+    </label>
+
+  </p>
+  <p><input type="text" name = "username" placeholder="Username" value="{{data.username}}"/></p>
+  <p>
+
+    <label for="first_name">
+            Your full name:
+    </label>
+
+  </p>
+  <p><input type="text" name = "first_name" placeholder="Your Full name" value="{{data.first_name}}"/></p>
+  <p>
+
+    <label for="email">
+            Your email address:
+    </label>
+
+  </p>
+  <p><input type="email" name = "email" placeholder="email address" value="{{data.email}}"/></p>
+  <p>
+
+    <label for="password">
+            Password:
+    </label>
+
+  </p>
+  <p><input type="password" name = "password" placeholder="Password"/></p>
+  <p><input type="password" name = "password2" placeholder="Confirm Password"/></p>
+  <p><input type="submit" value="Register" /></p>
+  <p>
+    Already have an account?
+    <a href="{%url 'login'%}">
+      Login
+    </a>
+  </p>
+  <a href="#">
+    Know more about us
+  </a>
+</form>

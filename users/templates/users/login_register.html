@@ -1,34 +1,51 @@
 {% extends 'main.html' %}
+{%load static%}
 {% block content %}
-  <h2>Login</h2>
-<form method="POST" action="{% url 'login' %}">
-     {% csrf_token %}
-      <p>
-
-        <label for="username">
-                Username:
-        </label>
-
-      </p>
-      <p><input type="text" name = "username" placeholder="Username"/></p>
-      <p>
-
-        <label for="password">
-                Password:
-        </label>
-
-      </p>
-      <p><input type="password" name = "password" placeholder="Password"/></p>
-      <p><input type="submit" value="Login" /></p>
-      <p>
-        Don't have an account?
-        <a href="{%url 'register'%}">
-          Sign up
-        </a>
-      </p>
-      <a href="{%url 'request-reset-email'%}">
-        Forgot password?
+<div class="auth">
+  <div class="card" style = "background-color: #d5e1df;">
+    <div class="auth__header text-center">
+      <a href="/">
+        <img src="{% static 'images/google-developers-1.svg' %}" style="height: 200px; width: 200px;" alt="icon" />
       </a>
+      <h3>Account Login</h3>
+      <p>Hello Developer, Welcome Back!</p>
+    </div>
 
-</form>
+    <form action="{% url 'login' %}" method = "POST" class="form auth__form">
+      {% csrf_token %}
+      <!-- Input:Email -->
+      <div class="form__field">
+        <label for="formInput#text">Username: </label>
+        <input
+          class="input input--text"
+          id="formInput#text"
+          type="text"
+          name="username"
+          placeholder="Enter your username..."
+        />
+      </div>
+
+      <!-- Input:Password -->
+      <div class="form__field">
+        <label for="formInput#password">Password: </label>
+        <input
+          class="input input--password"
+          id="formInput#passowrd"
+          type="password"
+          name="password"
+          placeholder="••••••••"
+        />
+      </div>
+      <div class="auth__actions">
+        <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+        <a href="{%url 'request-reset-email'%}">Forget Password?</a>
+      </div>
+    </form>
+    <div class="auth__alternative">
+      <p>Don’t have an Account?</p>
+      <a href="{%url 'register'%}">Sign Up</a>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
