@@ -651,7 +651,7 @@ img {
 
 .auth::after {
   z-index: -1;
-  opacity: 0.1;
+  opacity: 0.25;
   content: '';
   display: block;
   position: fixed;
@@ -659,7 +659,7 @@ img {
   left: 0;
   bottom: 0;
   right: 0;
-  background: url(../images/code.jpg);
+  background: url(../images/bg-1.jpg);
 }
 
 .auth > .card {

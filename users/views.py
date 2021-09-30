@@ -213,7 +213,7 @@ def loginUser(request):
 def logoutUser(request):
     logout(request) #this is django's inbuilt function to logout user from the website
     #now we can redirect user to the login page of our website
-    messages.error(request,'User was logged out')
+    messages.success(request,'User was logged out')
     return redirect('login')
 
 
@@ -229,7 +229,7 @@ class RequestResetEmailView(View):
 
         #before we send the mail to this email address we need to check if this user even exist in our database
         if not validate_email(email): #step1. check the email is valid or not
-            messages.add_message(request,messages.INFO,'email address not valid!')
+            messages.add_message(request,messages.ERROR,'email address not valid!')
             return render(request, 'users/request-reset-email.html')
 
         user = User.objects.filter(email=email) #this will find the user having the email address entered in the provide email section of the reset passsword html page
@@ -271,7 +271,7 @@ class RequestResetEmailView(View):
             email_message.send()
 
 
-        messages.add_message(request,messages.INFO,'email reset link has been sent to your email address')
+        messages.add_message(request,messages.SUCCESS,'email reset link has been sent to your email address')
         return render(request, 'users/request-reset-email.html')
 
 class SetNewPasswordView(View):
@@ -287,7 +287,7 @@ class SetNewPasswordView(View):
             user_id = force_text(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=user_id)
             if not PasswordResetTokenGenerator().check_token(user, token): #if this returns false then the link is already used to reset the password
-                messages.add_message(request,messages.INFO,'Password reset link expired')
+                messages.add_message(request,messages.ERROR,'Password reset link expired')
                 return redirect('login')
 
         except DjangoUnicodeDecodeError as identifier:
@@ -309,10 +309,10 @@ class SetNewPasswordView(View):
         password1 = request.POST.get('password_1')
         password2 = request.POST.get('password_2')
         if len(password1) < 6:
-            messages.add_message(request,messages.INFO,'password must be atleast 6 characters long')
+            messages.add_message(request,messages.ERROR,'password must be atleast 6 characters long')
             context['has_error'] = True
         if password1 != password2:
-            messages.add_message(request,messages.INFO,'password do not match')
+            messages.add_message(request,messages.ERROR,'password do not match')
             context['has_error'] = True
         if context['has_error'] == True:
             return render(request, 'users/set-new-password.html',context)
@@ -323,7 +323,7 @@ class SetNewPasswordView(View):
             user = User.objects.get(pk=user_id)
             user.set_password(password1)
             user.save()
-            messages.add_message(request,messages.INFO,'password changed successfully')
+            messages.add_message(request,messages.SUCCESS,'password changed successfully')
             return redirect('login')
         except DjangoUnicodeDecodeError as identifier:
             messages.add_message(request,messages.INFO,'Oops something went wrong!')
