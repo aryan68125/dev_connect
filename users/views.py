@@ -38,6 +38,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 #----------------------reset password----------------------
 
+#restrict unauthenticated user from seeing add project page
+#we won't be using mixins here because we are using function based views mixins are used when using class based views when foloowing standard procedures for django web development
+#instead we will be using login_required decorator to ristrict unauthenticated users from acessing certain pages in our website
+from django.contrib.auth.decorators import login_required
 
 #--------------------------USER REGISTRATION, LOGIN, AUTHENTICATION,LOGOUT RELATED IMPORTS ENDS HERE----------------------------------
 
@@ -45,6 +49,9 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib import messages
 
 #-------------------------USER Registration, EMAIL VERIFICATION , LOGIN AND LOGOUT FUNCTIONALITY STARTS HERE--------------------------------
+
+#inherit or import the forms.py that will create aProfile form for us using django's inbuilt Model form generation function
+from . forms import ProfileForm, SkillForm
 
 class RegistrationView(View):
     #to handle the get request
@@ -336,8 +343,45 @@ class SetNewPasswordView(View):
 #-------------------------USER Registration, EMAIL VERIFICATION , LOGIN AND LOGOUT FUNCTIONALITY ENDS HERE--------------------------------
 
 
+#fucntion that will handle the logic behid the user's account page
+#in this page users will be able to add a new skill edit their skills add a bio or edit their bio add, edit or delete their projects that they have worked on
+#this My account page should be restricted from those who are not logged in our website as an active developer
+#create an update view and here we are gonna reuse the model form from form.py file that we created inside our projects application in our django project
+@login_required(login_url='login')
+def userAccount(request):
+    # get the user using request.User object instead of pk
+    profile = request.user.profile #getting the logged in user profile using one to one relation in our database models
 
+    #querying user's skills from the database
+    Skills = profile.skill_set.all()
 
+    #querying the user's projects from the database
+    projects = profile.project_set.all()
+
+    stuff_for_front_end = {
+         'profile':profile,
+         'Skills':Skills,
+         'projects':projects,
+    }
+    return render(request, 'users/account.html', stuff_for_front_end)
+
+#here we will handle user profile details add and edit functionality using django model form
+@login_required(login_url='login')
+def editAccount(request):
+    profile=request.user.profile #get the current user that is currently loggedin in our website
+    form = ProfileForm(instance = profile) #here instance = profile will pre fill the form for us if there is any previous data related to that user is already present in the database
+
+    #now here we will process the data that is coming from the model form in the front end to the backend
+    if request.method == 'POST':
+        #instance allows us to know which user are we updating in the current moment and time
+        form = ProfileForm(request.POST, request.FILES, instance = profile) #request.FILES allows us to process the image uploaded by the user using the model form in the frontend
+        if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
+            form.save() #save the form to the database
+            return redirect('account') #redirect user to their respective account
+    stuff_for_front_end = {
+        'form':form,
+    }
+    return render(request, 'users/profile_form.html', stuff_for_front_end)
 
 # Create your views here.
 def profiles(request):
@@ -365,3 +409,59 @@ def userProfile(request, pk):
         'otherSkills':otherSkills,
     }
     return render(request, 'users/user-profile.html', stuff_for_front_end)
+
+#the functions below will handle the CRUD functionality in skills section in the user's profile page
+#here we will handle user profile details add and edit functionality using django model form
+@login_required(login_url='login')
+def createSkill(request):
+    profile = request.user.profile #get the profile of the currently logged in user
+    form = SkillForm() #get the Skill model form from forms.py
+    if request.method=='POST':
+        form = SkillForm(request.POST)
+        if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
+            skill = form.save(commit=False) #this is going to give us the instance of the object
+            skill.owner = profile #set the owner instance
+            skill.save()
+            messages.success(request,'Skill added')
+            return redirect('account')
+
+    stuff_for_front_end = {
+        'form':form,
+    }
+    return render(request, 'users/skill_form.html', stuff_for_front_end)
+
+#the functions below will handle the CRUD functionality in skills section in the user's profile page
+#here we will handle user profile details add and edit functionality using django model form
+@login_required(login_url='login')
+def updateSkill(request, pk): #we need to get the skill by id when we try to edit it
+    profile = request.user.profile #get the profile of the currently logged in user
+    skill = profile.skill_set.get(id=pk) #this will make sure that only the owner of that skill can edit it
+    form = SkillForm(instance=skill) #get the current instance of the skill
+    if request.method=='POST':
+        form = SkillForm(request.POST ,  instance = skill)
+        if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
+            form.save()
+            messages.success(request,'Skill updated')
+            return redirect('account')
+
+    stuff_for_front_end = {
+        'form':form,
+    }
+    return render(request, 'users/skill_form.html', stuff_for_front_end)
+
+#the functions below will handle the CRUD functionality in skills section in the user's profile page
+#here we will handle user profile details add and edit functionality using django model form
+@login_required(login_url='login')
+def deleteSkill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+    if request.method == 'POST':
+        skill.delete()
+        messages.error(request,'Skill deleted')
+        return redirect('account')
+    stuff_for_frontend = {
+         #points to remember here we are using delete_template.html file for multiple pages throughout this entire project
+         #and we have already used {{object}} variable in this template to pass data from backend to the front end so we will stick to that in order to avoid errors
+         'object':object
+    }
+    return render(request, 'delete_template.html', stuff_for_frontend)

@@ -42,6 +42,25 @@ def CreateProfile(sender, instance, created, **kwargs):
             name = user.first_name,
         ) #create a profile
 
+#handeling user_profile account edit function
+#now configuring our sender signal post_save.connect(Function_name_that_you_want_to_trigger, sender = Model_name_that_will_be_sending_that_signal)
+#post_save.connect(updateUserProfile, sender=Profile) so basically you can achieve same delete functionality by simply using @reciever(type_of_the_signal, sender = Model_name_that_will_be_sending_that_signal)
+#delete the user from django's inbuilt User model for auth and registration if admin deletes the user from Profile model
+#here we want to update the User model when we update the Profile model using Profile model form
+@receiver(post_save, sender = Profile)
+def updateUserProfile(sender, instance, created, **kwargs):
+    #this will update the actual user so we need to get the instance of the user that is logged in at the moment
+    profile = instance
+    user = profile.user #because it's a one to one relationship between User model and Profile model we can just get the user by profile.user
+
+    #if the profile is created for the first time the signal should trigger CreateProfile function and not updateUserProfile function
+    if created == False: # we do not want to call this if this is the first instance of the profile if you forget to check this senario then you will cause an infinite recursion between CreateProfile function and updateUserProfile function
+        #then update the user profile here
+        user.first_name = profile.name #this will save the profile so now we have the modified data
+        user.username = profile.username #update usrname in the profile
+        user.email = profile.email #update email in profile
+        user.save() #now we can save all the modified data in the profile model ofrm to our database
+
 #handeling user_profile delete function
 #now configuring our sender signal post_delete.connect(Function_name_that_you_want_to_trigger, sender = Model_name_that_will_be_sending_that_signal)
 #post_delete.connect(deleteUser, sender=Profile) so basically you can achieve same delete functionality by simply using @reciever(type_of_the_signal, sender = Model_name_that_will_be_sending_that_signal)
@@ -53,4 +72,4 @@ def deleteUser(sender, instance, **kwargs):
         user = instance.user # the instance here is the Profile model and it will get the user from the profile model
         user.delete() #this will delete the user from the User django's inbuilt model
     except:
-        print("An exception occurred") 
+        print("An exception occurred")

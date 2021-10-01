@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{{request.GET.next}}"><i class="im im-angle-left"></i></a> <!---{{request.GET.next}} will get the request from the previous page dynamically '?next=/your_previous_page_link'--->
+            <br>
+
+            <form class="form" method="POST" action="">
+                   {% csrf_token %}
+                   <p> Are you sure you want to delete "{{object}}" ?</p>
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Confirm" />
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content%}

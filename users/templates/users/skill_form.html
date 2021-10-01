@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
+            <br>
+            <h1>Skills section</h1>
+            <!---here we will use django's inbuilt model form to generate a from for the loggedin users where they will be able to edit their personal information --->
+            <!---enctype="multipart/form-data" allows us to upload user image into the website using model form --->
+            <form class="form" method="POST" action="">  <!---action is goint to point us to the url that we have created in users url.py file--->
+
+                {% csrf_token %}
+                   <!-- Input:Text -->
+                   {% for field in form %}
+                     <div class="form__field">
+                       <!---now this form by default will try to edit our User model but our goal here is to edit our user's Profile model and not the User model --->
+                       <!---for example if we update my User name from aditya to Aditya kumar in this Profile model form it will actually go ahead and change my username in User model and we need to make sure that it doesn't happen--->
+                       <!---so inorder to achieve that we need to go to our signals.py file and make some changes there--->
+                          <label for="formInput#text">{{field.label}}</label>
+                          {{field}}
+                     </div>
+                   {% endfor %}
+                   <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content %}
