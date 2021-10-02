@@ -53,6 +53,9 @@ from django.contrib import messages
 #inherit or import the forms.py that will create aProfile form for us using django's inbuilt Model form generation function
 from . forms import ProfileForm, SkillForm
 
+#import the search_dev.py file that will handle all the search functionality and help the website visitors to search developers in the developers page
+from . search_dev import searchDeveloper
+
 class RegistrationView(View):
     #to handle the get request
     def get(self, request):
@@ -385,9 +388,10 @@ def editAccount(request):
 
 # Create your views here.
 def profiles(request):
-    profiles = Profile.objects.all() #get all the profiles that are present in the database
+    profiles, search_query = searchDeveloper(request)
     stuff_for_front_end = {
         'profiles':profiles,
+        'search_query':search_query,
     }
     return render(request, 'users/profiles.html', stuff_for_front_end)
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
 
-from . models import Project
+from . models import Project, Tag
 
 #now indorder to use a model form that we jsut created in the forms.py we are just gonna import it into our views.py
 from .forms import ProjectForm
@@ -12,12 +12,16 @@ from .forms import ProjectForm
 #instead we will be using login_required decorator to ristrict unauthenticated users from acessing certain pages in our website
 from django.contrib.auth.decorators import login_required
 
+#import searchProject.py file here so that we can search projects in the projects_list.html page
+from . searchProject import searchProject
+
 # Create your views here.
 
 def projects(request):
-    projects = Project.objects.all()
+    projects , search_query = searchProject(request)
     data_for_front_end = {
         'projects' : projects,
+        'search_query':search_query,
     }
     return render(request, 'projects/projects_list.html', data_for_front_end)
 
