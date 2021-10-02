@@ -82,7 +82,7 @@ def deleteUser(sender, instance, **kwargs):
 @receiver(pre_save, sender=Profile)
 def delete_old_profile_image(sender, instance, **kwargs):
     # on creation, signal callback won't be triggered
-    if instance._state.adding and not istance.pk: #On object creation, instance does not have pk yet, so we use not instance.pk to detect if it is created or not. read more here stackoverflow.com/questions/3607573/…
+    if instance._state.adding and not instance.pk: #On object creation, instance does not have pk yet, so we use not instance.pk to detect if it is created or not. read more here stackoverflow.com/questions/3607573/…
         return False
 
     try:
@@ -101,7 +101,7 @@ def delete_old_profile_image(sender, instance, **kwargs):
 @receiver(pre_save, sender=Project)
 def delete_old_featured_image(sender, instance, **kwargs):
     # on creation, signal callback won't be triggered
-    if instance._state.adding and not istance.pk: #On object creation, instance does not have pk yet, so we use not instance.pk to detect if it is created or not. read more here stackoverflow.com/questions/3607573/…
+    if instance._state.adding and not instance.pk: #On object creation, instance does not have pk yet, so we use not instance.pk to detect if it is created or not. read more here stackoverflow.com/questions/3607573/…
         return False
 
     try:
