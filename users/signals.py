@@ -12,7 +12,10 @@ def ready(self):
 
 #post_save is gonna trigger anytime a model is saved already and after the fact that it's saved
 #post_delete is gonna trigger anytime a model is deleted
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_save
+import os
+#import Project model from the projects application so that we have access to featured_image model that save the images for our project
+from projects.models import Project
 #import a decorator
 from django.dispatch import receiver
 
@@ -73,3 +76,41 @@ def deleteUser(sender, instance, **kwargs):
         user.delete() #this will delete the user from the User django's inbuilt model
     except:
         print("An exception occurred")
+
+#delete old profile pictures of the users when the user decides to change his/her profile picture with the new one
+#this will help save precious space on your web server that you rented online and save you money on the go
+@receiver(pre_save, sender=Profile)
+def delete_old_profile_image(sender, instance, **kwargs):
+    # on creation, signal callback won't be triggered
+    if instance._state.adding and not istance.pk: #On object creation, instance does not have pk yet, so we use not instance.pk to detect if it is created or not. read more here stackoverflow.com/questions/3607573/…
+        return False
+
+    try:
+        old_profile_image = sender.objects.get(pk=instance.pk).profile_image
+    except sender.DoesNotExist:
+        return False
+
+    # comparing the new file with the old one
+    profile_image = instance.profile_image
+    if not old_profile_image == profile_image:
+        if os.path.isfile(old_profile_image.path):
+            os.remove(old_profile_image.path)
+
+#delete old project pictures of the users when the user decides to change his/her project picture with the new one
+#this will help save precious space on your web server that you rented online and save you money on the go
+@receiver(pre_save, sender=Project)
+def delete_old_featured_image(sender, instance, **kwargs):
+    # on creation, signal callback won't be triggered
+    if instance._state.adding and not istance.pk: #On object creation, instance does not have pk yet, so we use not instance.pk to detect if it is created or not. read more here stackoverflow.com/questions/3607573/…
+        return False
+
+    try:
+        old_featured_image = sender.objects.get(pk=instance.pk).featured_image
+    except sender.DoesNotExist:
+        return False
+
+    # comparing the new file with the old one
+    featured_image = instance.featured_image
+    if not old_featured_image == featured_image:
+        if os.path.isfile(old_featured_image.path):
+            os.remove(old_featured_image.path)
