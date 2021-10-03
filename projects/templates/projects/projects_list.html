@@ -58,5 +58,31 @@
 
   </section>
 
+     <!---show the pagination div only when there is a page to paginate in other words do not show page numbers at the bottom when there is only one page there in the website--->
+      {% if projects.has_other_pages %}
+         <div class="pagination">
+            <ul class="container">
+                <!---previous button should only show up if the user is not in page 1--->
+                {% if projects.has_previous %}
+                <!---{{projects.previous_page_number}} gives us the previous oage number from the page that we are currently on--->
+                    <li><a href="?page={{projects.previous_page_number}}" class="btn">&#10094; Prev</a></li>
+                {% endif %}
+
+                {% for page in custom_range %} <!---paginator.page_range--->
+                   {% if page == projects.number %} <!---projects.number will give us the current number of page that we are on--->
+                        <li><a href="?page={{page}}" class="btn btn--sub">{{page}}</a></li>
+                   {% else %}
+                        <li><a href="?page={{page}}" class="btn page-link">{{page}}</a></li>
+                   {% endif %}
+                {% endfor %}
+
+                <!---next button should only show up if the user is not in last page--->
+                {% if projects.has_next %}
+                  <!---{{projects.next_page_number}} gives us the next oage number from the page that we are currently on--->
+                    <li><a href="?page={{projects.next_page_number}}" class="btn">Next &#10095;</a></li>
+                {% endif %}
+            </ul>
+         </div>
+     {% endif %}
 </main>
 {% endblock content %}

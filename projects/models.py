@@ -23,6 +23,11 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    #sort the projects by date
+    # ordering = ['created']  will give us the oldest entry in the database model first so in order to get the newest first we need to invert that
+    class Meta:
+        ordering = ['-created'] # ordering = ['-created'] will give the newest entry in our database first
+
 class Riview(models.Model):
     VOTE_TYPE = (
 
