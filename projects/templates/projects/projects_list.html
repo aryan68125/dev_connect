@@ -11,7 +11,8 @@
 
       <div class="hero-section__search">
         <!---here search project operation will take place--->
-        <form class="form" action="" method="get">
+        <!---give the search form here an id of id='searchForm' so that we can access it in our javascript code that will be linking this earch form to our pagination.html for this page--->
+        <form id='searchForm' class="form" action="" method="get"> <!---search from STARTS HERE--->
           <div class="form__field">
             <label for="formInput#search">Search By Projects </label>
             <input class="input input--text" id="formInput#search" type="text" name="search_query"
@@ -19,7 +20,7 @@
           </div>
 
           <input class="btn btn--sub btn--lg" type="submit" value="Search" />
-        </form>
+        </form> <!---search from ENDS HERE--->
 
       </div>
     </div>
@@ -58,31 +59,10 @@
 
   </section>
 
-     <!---show the pagination div only when there is a page to paginate in other words do not show page numbers at the bottom when there is only one page there in the website--->
-      {% if projects.has_other_pages %}
-         <div class="pagination">
-            <ul class="container">
-                <!---previous button should only show up if the user is not in page 1--->
-                {% if projects.has_previous %}
-                <!---{{projects.previous_page_number}} gives us the previous oage number from the page that we are currently on--->
-                    <li><a href="?page={{projects.previous_page_number}}" class="btn">&#10094; Prev</a></li>
-                {% endif %}
+   <!---include pagination.html file from the root template directory into this page so that we can paginate this current page--->
+   <!---pass in a props for projects(query set ) and rename it to queryset--->
+   {% include 'pagination.html' with queryset=projects custom_range=custom_range %} <!---pass in a variable called queryset and this is gonna be a key value pair and the value is gonna be projects and the syntax is queryset=projects
+                                                                 so now we have set the value of queryset to projects value NOTE :-> custom_range is from the projects views.py file--->
 
-                {% for page in custom_range %} <!---paginator.page_range--->
-                   {% if page == projects.number %} <!---projects.number will give us the current number of page that we are on--->
-                        <li><a href="?page={{page}}" class="btn btn--sub">{{page}}</a></li>
-                   {% else %}
-                        <li><a href="?page={{page}}" class="btn page-link">{{page}}</a></li>
-                   {% endif %}
-                {% endfor %}
-
-                <!---next button should only show up if the user is not in last page--->
-                {% if projects.has_next %}
-                  <!---{{projects.next_page_number}} gives us the next oage number from the page that we are currently on--->
-                    <li><a href="?page={{projects.next_page_number}}" class="btn">Next &#10095;</a></li>
-                {% endif %}
-            </ul>
-         </div>
-     {% endif %}
 </main>
 {% endblock content %}

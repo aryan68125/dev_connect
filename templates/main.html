@@ -41,7 +41,7 @@
             <li class="header__menuItem"><a href="{% url 'account' %}">My Account</a></li>
 
             <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Log out</a></li>
-            
+
             {% else %}
             <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
             {% endif %}
@@ -65,5 +65,6 @@
 
     {% endblock content %}
   </body>
-
+<!---add a javascript file here that will link our pagination and search forms in projects_list.html and developers.html pages--->
+<script src="{% static 'js/main.js' %}" ></script>
 </html>

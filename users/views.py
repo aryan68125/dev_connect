@@ -56,6 +56,9 @@ from . forms import ProfileForm, SkillForm
 #import the search_dev.py file that will handle all the search functionality and help the website visitors to search developers in the developers page
 from . search_dev import searchDeveloper
 
+#import related to pagination process of the develeopers list page Profiles.html page
+from . profiles_pagination import paginate_profiles
+
 class RegistrationView(View):
     #to handle the get request
     def get(self, request):
@@ -389,9 +392,14 @@ def editAccount(request):
 # Create your views here.
 def profiles(request):
     profiles, search_query = searchDeveloper(request)
+
+    #handeling developers page pagination here in profiles.html
+    custom_range, profiles = paginate_profiles(request, profiles, 6)
+
     stuff_for_front_end = {
         'profiles':profiles,
         'search_query':search_query,
+        'custom_range':custom_range,
     }
     return render(request, 'users/profiles.html', stuff_for_front_end)
 

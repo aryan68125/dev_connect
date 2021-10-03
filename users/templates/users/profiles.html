@@ -10,7 +10,7 @@
       </div>
 
       <div class="hero-section__search">
-        <form class="form" action="" method="get">
+        <form id='searchForm' class="form" action="" method="get">
           <div class="form__field">
             <label for="formInput#search">Search Developers </label>
             <input class="input input--text" id="formInput#search" type="text" name="search_query"
@@ -57,5 +57,11 @@
       </div>
     </div>
   </section>
+
+  <!---include pagination.html file from the root template directory into this page so that we can paginate this current page--->
+  <!---pass in a props for projects(query set ) and rename it to queryset--->
+  {% include 'pagination.html' with queryset=profiles custom_range=custom_range %} <!---pass in a variable called queryset and this is gonna be a key value pair and the value is gonna be projects and the syntax is queryset=projects
+                                                                so now we have set the value of queryset to projects value NOTE :-> custom_range is from the projects views.py file--->
+
 </main>
 {% endblock content %}
