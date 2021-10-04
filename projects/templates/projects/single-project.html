@@ -38,44 +38,51 @@
             <h5 class="project--rating">
               {{projectObj.vote_ratio}}% Postitive Feedback ({{projectObj.vote_total}} Vote{{ projectObj.vote_total|pluralize:'s' }})
             </h5>
+            {% if request.user.profile.id in projectObj.riviewers %} <!---here make sure that the currently logged in user id does not exist in the riviewers list in Project model--->
+                <p>you already voted for this project</p>
+            {% elif request.user.profile == projectObj.owner %} <!---here we are making sure that you are not the project owner in other words project owners should be stopped from voting on their own projects--->
+                <p>You cannot riview your own work</p>
+            {% elif request.user.is_authenticated %} <!---here we wanna make sure that the user is authenticated or has an account and is logged in into the website--->
+                <form class="form" action="{% url 'project' projectObj.id %}" method="POST">
+                  {% csrf_token %}
+                  <!-- Textarea -->
+                  {% for field in form %}
+                  <div class="form__field">
+                    <label for="formInput#textarea">{{field.label}} </label>
+                  {{field}}
+                  </div>
+                  {% endfor %}
+                  <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
+                </form>
+            {% else %} <!---is user is not authenticated--->
+                <a href="{% url 'login' %}?next={{request.path}}">You need to Login before you can leave a riview</a>  <!---?next={{request.path}} will allow us to redirect the user back to the project he was in after login---> 
+            {% endif %}
 
-            <form class="form" action="#" method="POST">
-              <!-- Textarea -->
-              <div class="form__field">
-                <label for="formInput#textarea">Comments: </label>
-                <textarea class="input input--textarea" name="message" id="formInput#textarea"
-                  placeholder="Write your comments here..."></textarea>
-              </div>
-              <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
-            </form>
+            <!---comments list left the other users--->
             <div class="commentList">
-              <div class="comment">
-                <a href="profile.html">
-                  <img class="avatar avatar--md"
-                    src="https://pbs.twimg.com/profile_images/1335382240931368961/b3wSZKj4_400x400.jpg" alt="user" />
-                </a>
-                <div class="comment__details">
-                  <a href="profile.html" class="comment__author">Sulamita Ivanov</a>
-                  <p class="comment__info">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit alias numquam perferendis
-                    mollitia minus minima exercitationem possimus ab deserunt qui, soluta iusto doloribus eveniet
-                    similique consequuntur ratione, dignissimos ut magni laborum quo.
-                  </p>
-                </div>
-              </div>
-              <div class="comment">
-                <a href="profile.html">
-                  <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/33843378" alt="user" />
-                </a>
-                <div class="comment__details">
-                  <a href="profile.html" class="comment__author">Dennis Ivanov</a>
-                  <p class="comment__info">
-                    Consectetur adipisicing elit. Reprehenderit alias numquam perferendis mollitia minus minima
-                    exercitationem possimus ab deserunt qui, ratione, dignissimos ut magni laborum quo.
-                  </p>
-                </div>
-              </div>
-            </div>
+              {% for riview in projectObj.riview_set.all %}
+                  {% if riview.body %}
+                   <div class="comment">
+                     <a href="{% url 'user-profile' riview.owner.id %}">
+                       <img class="avatar avatar--md"
+                         src="{{riview.owner.profile_image.url}}" alt="user" />
+                     </a>
+                     <div class="comment__details">
+                       <a href="{% url 'user-profile' riview.owner.id %}" class="comment__author">{{riview.owner.name}}</a>
+                       <p class="comment__info">
+                         {{riview.body|linebreaksbr}}
+                       </p>
+                     </div>
+                     <p>
+                       <a class="tag tag--pill tag--main settings__btn" href=""><i class="im im-edit"></i> Edit</a>
+                     </p>
+                    </div>
+                  {% endif %}
+              {% endfor %}
+
+            </div> <!---comments list left the other users--->
+
+
           </div>
         </div>
       </div>

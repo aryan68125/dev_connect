@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
 
-from . models import Project, Tag
+from . models import Project, Tag, Riview
 
 #now indorder to use a model form that we jsut created in the forms.py we are just gonna import it into our views.py
-from .forms import ProjectForm
+from .forms import ProjectForm, RiviewForm
 
 #restrict unauthenticated user from seeing add project page
 #we won't be using mixins here because we are using function based views mixins are used when using class based views when foloowing standard procedures for django web development
@@ -17,6 +17,9 @@ from . searchProject import searchProject
 
 #import project_list_pagination.py
 from . projects_list_pagination import paginate_projects_list
+
+#import he flash messages to let the users know that riview is submitted
+from django.contrib import messages
 
 # Create your views here.
 
@@ -35,11 +38,25 @@ def projects(request):
 
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
-    tags = projectObj.tags.all()
+    form = RiviewForm()
 
+    #process the riview model form
+    if request.method == 'POST':
+        form = RiviewForm(request.POST) #get the riview from the front end
+        riview = form.save(commit=False) #get the instance of that riview
+        riview.project = projectObj # set the project to the riview
+        riview.owner = request.user.profile #set the owner of the riview
+        riview.save() #now save the riview
+        #update project vote count
+        projectObj.getVoteCount
+        messages.success(request,'Riview Submitted')
+        return redirect('project', pk=projectObj.id)
+
+    tags = projectObj.tags.all()
     data_for_front_end = {
         'projectObj':projectObj,
         'tags':tags,
+        'form':form,
     }
     return render(request, 'projects/single-project.html', data_for_front_end)
 

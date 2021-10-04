@@ -214,7 +214,7 @@ def loginUser(request):
             #if user exists then go ahead and log the user in to this website
             login(request, user) #this function will create a session for the user in the database in that sessions table
             #if the user successfully logs in then go ahead and redirect the user to his/her respective account
-            return redirect('profiles')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'account') #get the next route from single-projects.html
 
         else: # if the user in None i.e the user exist in the database but either the password or the username do not match from the database then tell the user that either the username or password is incorrect
             print('username or password is incorrect')
