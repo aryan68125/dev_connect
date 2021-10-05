@@ -35,3 +35,24 @@ class Skill(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+class Message(models.Model):
+    #models.SET_NULL will not delete the mseesages sent by the sender user if the sender user decides to delete the account it will still show the message sentr by the sender user to the recipient user
+    sender = models.ForeignKey(Profile, on_delete= models.SET_NULL, null=True, blank=True) #person sending the message
+    recipient = models.ForeignKey(Profile, on_delete= models.SET_NULL, null=True, blank=True, related_name = "messages") #person getting the message related_name = "messages" allows us to connect both sender and recipient to the Profile model without any issue without it we would not be allowed to connect them to the Profile model both at the same time
+    name = models.CharField(max_length = 200, null=True, blank=True) #get the string value of the user
+
+    #email related attributes
+    subject = models.CharField(max_length = 200, null=True, blank=True) #get the string value of the user
+    email = models.EmailField(max_length = 200, null=True, blank=True) #get the string value of the user
+    body = models.TextField()
+    is_read = models.BooleanField(default=False, null=True) #any messages that you haven't opened up yet will be shown at the top
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True , primary_key=True, editable=False) #overriding django unique database items id
+
+    def __str__(self):
+        return self.subject
+
+    #set the ordering of the messages
+    class Meta:
+        ordering = ['is_read', '-created']

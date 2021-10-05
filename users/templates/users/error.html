@@ -1,15 +1,20 @@
-{% extends "base.html" %}
+{% extends "main.html" %}
+{% load static %}
 {% block content %}
-<div class="login-box">
+<div class="auth" >
+<div class="card" style = "background-color: #d5e1df;">
+  <div class="auth__header text-center">
+    <a href="/">
+      <img src="{% static 'images/google-developers-1.svg' %}" style="height: 100px; width: 100px;" alt="icon" />
+    </a>
+    <h3>Oops!</h3>
+  </div>
   <div>
-  <h2>email verification failed!</h2>
+  <h2>Email verification failed!</h2>
+  <div class="auth__actions">
+    <a href="{% url 'register' %}">register your account with a different email address</a>
+  </div>
 </div>
-  <a href="{% url 'register' %}">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <p  class = "text-center">register your account with a different email address</p>
-  </a>
+</div>
 </div>
 {% endblock %}

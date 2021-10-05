@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 #import the profile model
-from . models import Profile
+from . models import Profile, Message
 
 #--------------------------USER REGISTRATION, LOGIN, AUTHENTICATION,LOGOUT RELATED IMPORTS STARTS HERE----------------------------------
 #for our login page to have proper login and user authaentication process we have to make these imports below
@@ -51,7 +51,7 @@ from django.contrib import messages
 #-------------------------USER Registration, EMAIL VERIFICATION , LOGIN AND LOGOUT FUNCTIONALITY STARTS HERE--------------------------------
 
 #inherit or import the forms.py that will create aProfile form for us using django's inbuilt Model form generation function
-from . forms import ProfileForm, SkillForm
+from . forms import ProfileForm, SkillForm, MessageForm
 
 #import the search_dev.py file that will handle all the search functionality and help the website visitors to search developers in the developers page
 from . search_dev import searchDeveloper
@@ -477,3 +477,92 @@ def deleteSkill(request, pk):
          'object':object
     }
     return render(request, 'delete_template.html', stuff_for_frontend)
+
+#this function will hendel our messages functionality , sender and recipient in our inbox.html page
+#the functions below will handle the CRUD functionality in skills section in the user's profile page
+#here we will handle user profile details add and edit functionality using django model form
+@login_required(login_url='login')
+def inbox(request):
+    #get the currently logged in user
+    profile = request.user.profile
+
+    #get the messages here that are send by the sender user to the recipient user
+    #make sure to call this variable other than messages otherwise there will conflict between the inbuilt message class and the variable that you set here
+    #because we used related_name = "messages" in the recipient attribute of our Message model we will not be using message_set.all()
+    messageRequest = profile.messages.all()
+
+    #get the number of unread messages
+    unreadCount = messageRequest.filter(is_read = False).count()
+
+
+    stuff_for_frontend = {
+
+        'messageRequest':messageRequest,
+        'unreadCount':unreadCount,
+
+    }
+    return render(request, 'users/inbox.html', stuff_for_frontend)
+
+#this function will hendel our messages functionality , sender and recipient in message .html page
+#the functions below will handle the CRUD functionality in skills section in the user's profile page
+#here we will handle user profile details add and edit functionality using django model form
+@login_required(login_url='login')
+def viewMessage(request, pk):
+    #get the profile of the user from the profile model
+    profile = request.user.profile
+    #query the profile itself to get the messages we wanna make sure that the user cannot access someone elses messages by just accessing the primary key (pk)
+    #because we used related_name = "messages" in the recipient attribute of our Message model we will not be using message_set.all()
+    message = profile.messages.get(id=pk)
+
+    if message.is_read == False:
+        #mark the message as read when the user opens a message and reads it
+        message.is_read = True
+        message.save()
+
+    stuff_for_frontend = {
+
+      'message':message
+
+    }
+    return render(request, 'users/message.html', stuff_for_frontend)
+
+#this function will hendel our messages functionality , sender and recipient in message .html page
+def createMessage(request, pk):
+    recipient = Profile.objects.get(id=pk) #get the recipient via id
+
+    #cutome MessageForm
+    form = MessageForm() #get the Message model form from forms.py
+
+    #first check if we have a sender
+    try:
+        sender = request.user.profile #sender exist in the database (the sender user is logged in)
+    except:
+        sender = None #sender does not exist in the database (the sender user is not logged in)
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
+            message = form.save(commit=False)
+            #attach a sender and recipient togeather in the Message model
+            message.sender = sender
+            message.recipient = recipient
+
+            if sender:
+                #if user is not logged in then they are gonna provide their name and email
+                #get name and email and manually attach it
+                message.name = sender.name
+                message.email = sender.email
+            message.save()
+
+            #now send the notification to the recipient via email that someone messaged them
+
+            messages.success(request,'Message sent!')
+            return redirect('user-profile', pk=recipient.id) # now redirect the sender to the userProfile page to whome the message was sent
+
+            #if the user is logged in then don't need to provide their name and email
+
+    stuff_for_frontend = {
+        'recipient':recipient,
+        'form':form,
+    }
+    return render(request, 'users/message_form.html', stuff_for_frontend)

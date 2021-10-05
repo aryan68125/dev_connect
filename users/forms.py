@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 #here in this forms.py file we want to create a form for User's profile that's the reason we are importing Profile model from models.py file in our users application
-from . models import Profile, Skill
+from . models import Profile, Skill, Message
 
 #creating a modelform for Profile model
 class ProfileForm(ModelForm):
@@ -31,6 +31,20 @@ class SkillForm(ModelForm):
     #customizing our ProfileModel form
     def __init__(self, *args, **kwargs):
         super(SkillForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input'}) #adding a class input to each of the input fields html in Profile modelForm that was provided to us by django
+
+#creating a model form for Message model
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        #fields= '__all__' #this list all the fields that we specified in the models.py file in class Profile
+        # fields = ['name', 'discription']
+        fields = ['name', 'email', 'subject', 'body']
+    #customizing our ProfileModel form
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class':'input'}) #adding a class input to each of the input fields html in Profile modelForm that was provided to us by django

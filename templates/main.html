@@ -33,10 +33,10 @@
           <ul class="header__menu">
             <li class="header__menuItem"><a href="{% url 'profiles' %}">Developers</a></li>
             <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
-            <li class="header__menuItem"><a href="inbox.html">Inbox</a></li>
 
             <!---access the user in our template --->
             {% if request.user.is_authenticated %}
+            <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox</a></li>
 
             <li class="header__menuItem"><a href="{% url 'account' %}">My Account</a></li>
 

@@ -22,4 +22,9 @@ urlpatterns = [
     path('create-skill/', views.createSkill, name = 'create-skill'),
     path('update-skill/<str:pk>/', views.updateSkill, name = 'update-skill'),
     path('delete-skill/<str:pk>/', views.deleteSkill, name = 'delete-skill'),
+
+    #url roputes for messages realted stuff in our website
+    path('inbox/', views.inbox, name = 'inbox'),
+    path('message/<str:pk>/', views.viewMessage, name = 'message'),
+    path('send-message/<str:pk>/', views.createMessage, name = 'send-message'), #here str:pk is required so that we know where to send this message to
 ]

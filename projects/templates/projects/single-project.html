@@ -55,7 +55,7 @@
                   <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
                 </form>
             {% else %} <!---is user is not authenticated--->
-                <a href="{% url 'login' %}?next={{request.path}}">You need to Login before you can leave a riview</a>  <!---?next={{request.path}} will allow us to redirect the user back to the project he was in after login---> 
+                <a href="{% url 'login' %}?next={{request.path}}">You need to Login before you can leave a riview</a>  <!---?next={{request.path}} will allow us to redirect the user back to the project he was in after login--->
             {% endif %}
 
             <!---comments list left the other users--->
@@ -73,9 +73,6 @@
                          {{riview.body|linebreaksbr}}
                        </p>
                      </div>
-                     <p>
-                       <a class="tag tag--pill tag--main settings__btn" href=""><i class="im im-edit"></i> Edit</a>
-                     </p>
                     </div>
                   {% endif %}
               {% endfor %}
