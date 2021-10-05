@@ -380,10 +380,13 @@ def editAccount(request):
     #now here we will process the data that is coming from the model form in the front end to the backend
     if request.method == 'POST':
         #instance allows us to know which user are we updating in the current moment and time
-        form = ProfileForm(request.POST, request.FILES, instance = profile) #request.FILES allows us to process the image uploaded by the user using the model form in the frontend
-        if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
-            form.save() #save the form to the database
-            return redirect('account') #redirect user to their respective account
+        try:
+            form = ProfileForm(request.POST, request.FILES, instance = profile) #request.FILES allows us to process the image uploaded by the user using the model form in the frontend
+            if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
+                form.save() #save the form to the database
+                return redirect('account') #redirect user to their respective account
+        except:
+            messages.error(request,'Email required!')
     stuff_for_front_end = {
         'form':form,
     }
