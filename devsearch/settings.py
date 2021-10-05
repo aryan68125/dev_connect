@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     #do not add your apps here like
     #'projects',
     #'users',
+
+    #django cleanup will delete any static files images when the model is deleted
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
