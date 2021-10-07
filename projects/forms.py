@@ -10,7 +10,7 @@ class ProjectForm(ModelForm):
     # at a minimum the model form is gonna require two fields 1. a model that we are gonna create a from for and
     class Meta:
         model = Project
-        fields = ['title', 'discription', 'demo_link', 'source_link', 'tags', 'featured_image',]
+        fields = ['title', 'discription', 'demo_link', 'source_link', 'featured_image',]
 
         #customizing widgets so that we can apply our theme in this model form provided by django
         #this will allow us to change the tag input field from a select box to a multiple checkBox where we don not have to press ctrl and left mouse click to select a tag

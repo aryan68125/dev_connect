@@ -33,7 +33,7 @@
           <div class="dev">
              <a href="{% url 'user-profile' profile.id %}" class="card__body"> <!---when clicked it should take us to the user profile page--->
               <div class="dev__profile">
-                <img class="avatar avatar--md" src="{{profile.profile_image.url}}" alt="image" /> <!---profile picture of the user--->
+                <img class="avatar avatar--md" src="{{profile.imageURL}}" alt="" /> <!---profile picture of the user--->
                 <div class="dev__meta">
                   <h3>{{profile.name}}</h3>
                   <h5>{{profile.short_intro|slice:"50"}}</h5>

@@ -25,7 +25,7 @@
         </div>
 
         <div class="column column--2of3">
-          <img class="singleProject__preview" src="{{ projectObj.featured_image.url }}" alt="portfolio thumbnail" />
+          <img class="singleProject__preview" src="{{ projectObj.imageURL }}" alt="" />
           <a href="{% url 'user-profile' projectObj.owner.id %}" class="singleProject__developer">{{projectObj.owner.name}}</a>
           <h2 class="singleProject__title">{{projectObj.title}}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
@@ -65,7 +65,7 @@
                    <div class="comment">
                      <a href="{% url 'user-profile' riview.owner.id %}">
                        <img class="avatar avatar--md"
-                         src="{{riview.owner.profile_image.url}}" alt="user" />
+                         src="{{riview.owner.imageURL}}" alt="" />
                      </a>
                      <div class="comment__details">
                        <a href="{% url 'user-profile' riview.owner.id %}" class="comment__author">{{riview.owner.name}}</a>

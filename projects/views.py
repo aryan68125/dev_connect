@@ -73,6 +73,9 @@ def createProject(request):
     form = ProjectForm()
 
     if request.method == 'POST':
+        #hendle tags :- users should be able to add their own tags to the project
+        newTags = request.POST.get('newtags').replace("," , " ").split() #split is gonna take each individual word in the string and split it into different strings of lists
+
         #for debugging
         print(request.POST)
         form = ProjectForm(request.POST, request.FILES) #request.FILES will get the images uploaded by the users from the front end and now the links of those images can be saved in the database
@@ -82,6 +85,13 @@ def createProject(request):
             #here we are setting the currently logged in user to this newly created project as an owner of that particular project
             project.owner = profile #and then we can go into that project instance and update the owner attribute of that newly created project owner is the oneToMany relationship
             project.save() #now finally re save the newly created project into our database
+
+            for tag in newTags:
+                #now create tags while making sure there are no duplicates in the database
+                tag, created = Tag.objects.get_or_create(name = tag) #if the tag is not already prsent then create a tag if the tag is already present then query the tag
+                #get the project here with many to many relationships
+                project.tags.add(tag) #now set the tags to the project
+
             return redirect('account')
 
     data_for_front_end = {
@@ -106,15 +116,26 @@ def updateProject(request, pk):
                          #so an instance is gonna be the project that we are gonna edit
 
     if request.method == 'POST':
+        #hendle tags :- users should be able to add their own tags to the project
+        newTags = request.POST.get('newtags').replace("," , " ").split() #split is gonna take each individual word in the string and split it into different strings of lists
+
+
         #for debugging
         print(request.POST)
         form = ProjectForm(request.POST , request.FILES , instance = project) # here pass request.POST along with what project are we updating at the moment instance = project
         if form.is_valid(): #save the form data if the form is valid and it will add the newly created object to the database
-            form.save()
+            project = form.save()
+            for tag in newTags:
+                #now create tags while making sure there are no duplicates in the database
+                tag, created = Tag.objects.get_or_create(name = tag) #if the tag is not already prsent then create a tag if the tag is already present then query the tag
+                #get the project here with many to many relationships
+                project.tags.add(tag) #now set the tags to the project
+
             return redirect('account')
 
     data_for_front_end = {
          'form':form,
+         'project':project,
     }
     return render(request, "projects/project_form.html", data_for_front_end)
 

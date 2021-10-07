@@ -19,11 +19,26 @@
                         {{field}}
                     </div>
                 {% endfor %}
+
+                <!---show the tags that are assigned here in this project--->
+                <div class="form__field">
+                  {% for tag in project.tags.all %}
+                  <!---data-tag="{{tag.id}}" data-project="{{project.id}}" will be required by javascript--->
+                  <div class = "project-tag tag tag--pill tag--main" data-tag="{{tag.id}}" data-project="{{project.id}}">{{tag.name}} &#215;</div> <!---add an event handler in javascript to remove this tag when clicked on the x button--->
+                  {% endfor %}
+                </div>
+
+                <!---create a cutome form for tags here--->
+                <div class="form__field">
+                    <label for="formInput#text">Tags</label>
+                    <p>Please type your tags seperated by a space do not use , . or ; for seperating your tags</p>
+                    <textarea class="input" name="newtags" placeholder = "add tags ...."></textarea>
+                </div>
+
                 <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
             </form>
         </div>
     </div>
 </main>
-
 
 {% endblock content %}

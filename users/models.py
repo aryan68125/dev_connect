@@ -26,6 +26,15 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.username)
 
+    #this will handle the situation when the user deletes the profile_image from their profile
+    @property
+    def imageURL(self):
+        try:
+            url = self.profile_image.url #image url
+        except:
+            url = 'static/images/default.png'
+        return url
+
 class Skill(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True) #whenever a user profile gets deleted the skills will also be deleted so Profile model is the parent of this Skill model
     name = models.CharField(max_length=200, blank=True, null=True)

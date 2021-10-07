@@ -26,6 +26,10 @@ urlpatterns = [
     path('projects/', include('projects.urls')),
 
     path('', include('users.urls')),
+
+    #api related urls routes
+    path('api/', include('api.urls')),
+
 ]
 
 #added a media url route to this file so that django knows how to fetch user uploaded images for the front end

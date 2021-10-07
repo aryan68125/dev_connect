@@ -28,6 +28,15 @@ class Project(models.Model):
     class Meta:
         ordering = ['-vote_ratio', '-vote_total' , 'title'] # ordering = ['-created'] will give the newest entry in our database first
 
+    #this will handle the situation when the user deletes the featured_image from their profile
+    @property
+    def imageURL(self):
+        try:
+            url = self.featured_image.url #image url
+        except:
+            url = 'static/images/default.png'
+        return url
+
     #get all the voters for a specific project i wanna get all the owner's ids here
     @property #-> @property allows us to run a function as an attribute of the Profile model and not as an actual method of the Profile model
     def riviewers(self):
@@ -35,7 +44,7 @@ class Project(models.Model):
         #and now we will go into the value list in our riview model
         #now make sure that this is a simple list of ids and no objects are present here to do that use flat=True
         queryset = self.riview_set.all().values_list('owner__id', flat=True)
-        return queryset     
+        return queryset
 
     #this method is gona run a calculation and update the actual riview count
     @property #-> @property allows us to run a function as an attribute of the Profile model and not as an actual method of the Profile model
