@@ -131,14 +131,32 @@ WSGI_APPLICATION = 'devsearch.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+#download postgres_sql and link that database to the django project here
+#use pgAdmin to manage the database
+# postgres://peamnrwmzbuofx:a3f2903d1d8c835911fd01e41f1002549a1d54517999e75d22d46d9bf49a8107@ec2-54-145-188-92.compute-1.amazonaws.com:5432/db81fsio2867t9
+# db81fsio2867t9 = name of the database and is always at the end of the heroku database url
+# ec2-54-145-188-92.compute-1.amazonaws.com = Host name where your database resides
+# 5432 = Port
+# peamnrwmzbuofx = user name
+# a3f2903d1d8c835911fd01e41f1002549a1d54517999e75d22d46d9bf49a8107 = password
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbeaqod76ubtba',
+        'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+        'PORT': 5432,
+        'USER': 'xwfrsoxvtdhwkb',
+        'PASSWORD': 'f94dff40d6e286eaf75467930eefba6ce7b48a8973fc82614f3dea75b10b49aa',
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
