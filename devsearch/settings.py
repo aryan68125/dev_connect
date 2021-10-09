@@ -250,4 +250,6 @@ AWS_S3_REGION_NAME = "ap-south-1"
 
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 
+#this will make sure that the images having same name when uploaded to the s3 bucket have a unique name and do not overwrite each other
+#so basically if there are two users uploading an image having same names then it will not cause any conflict and prevent one user from overwriting othe user's uploaded image in the S3 bucket 
 AWS_S3_FILE_OVERWRITE = False
