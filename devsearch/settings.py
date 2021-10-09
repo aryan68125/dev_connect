@@ -236,6 +236,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #this line of code will host our website on heroku
 django_heroku.settings(locals())
 
+#------AMAZON S3 BUCKET RELATED SETTINGS--------------------
 #this will handle our amazon s3 bucket that will host our static files and user uploaded files on our website
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #setup your access key of your AWS (Amazon web services)
@@ -251,5 +252,5 @@ AWS_S3_REGION_NAME = "ap-south-1"
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 
 #this will make sure that the images having same name when uploaded to the s3 bucket have a unique name and do not overwrite each other
-#so basically if there are two users uploading an image having same names then it will not cause any conflict and prevent one user from overwriting othe user's uploaded image in the S3 bucket 
+#so basically if there are two users uploading an image having same names then it will not cause any conflict and prevent one user from overwriting othe user's uploaded image in the S3 bucket
 AWS_S3_FILE_OVERWRITE = False
