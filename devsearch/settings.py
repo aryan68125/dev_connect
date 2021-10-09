@@ -56,8 +56,12 @@ INSTALLED_APPS = [
     #django cleanup will delete any static files images when the model is deleted
     'django_cleanup.apps.CleanupConfig',
 
-    #add 'rest_framework',
+    #add 'rest_framework', for our django rest api
     'rest_framework',
+
+    #add boto3 and django-storages here so that we can use amazon s3 bucket
+    'storages',
+
 ]
 
 REST_FRAMEWORK = {
@@ -231,3 +235,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #this line of code will host our website on heroku
 django_heroku.settings(locals())
+
+#this will handle our amazon s3 bucket that will host our static files and user uploaded files on our website
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#setup your access key of your AWS (Amazon web services)
+AWS_ACCESS_KEY_ID = 'AKIAXJD4CDE4VCFD6EW5'
+AWS_SECRET_ACCESS_KEY = '3MuelBjVId7iiSkQg6dUERipQQ48sGCVbGw6GdZA'
+
+#now assign your s3 bucket to this django project
+AWS_STORAGE_BUCKET_NAME = "devconnect-bucket68125"
+
+#add this so that you can access your uploaded images from amazon s3 bucket
+AWS_S3_REGION_NAME = "ap-south-1"
+
+AWS_S3_SIGNATURE_VERSION = "s3v4"
