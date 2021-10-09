@@ -28,7 +28,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z9rf)p+v%xmbs2uwpdp0=65ebi7fx*m6ro!2bt4l=r4kr)g0f!'
+SECRET_KEY = 'django-insecure-z9rf)p+v%xmbs2uwpdp0=65ebi7fx*m6ro!2bt4l=r4kr)g013355674321549746awnkjhasdfbkjsadfnhqqighoWEFNLSDABWEF1233549879461564f!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -133,25 +133,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'devsearch.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-#download postgres_sql and link that database to the django project here
-#use pgAdmin to manage the database
-# postgres://peamnrwmzbuofx:a3f2903d1d8c835911fd01e41f1002549a1d54517999e75d22d46d9bf49a8107@ec2-54-145-188-92.compute-1.amazonaws.com:5432/db81fsio2867t9
-# db81fsio2867t9 = name of the database and is always at the end of the heroku database url
-# ec2-54-145-188-92.compute-1.amazonaws.com = Host name where your database resides
-# 5432 = Port
-# peamnrwmzbuofx = user name
-# a3f2903d1d8c835911fd01e41f1002549a1d54517999e75d22d46d9bf49a8107 = password
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbeaqod76ubtba',
-        'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+        'NAME': 'your postgres SQL database name',
+        'HOST': 'your database host name',
         'PORT': 5432,
-        'USER': 'xwfrsoxvtdhwkb',
-        'PASSWORD': 'f94dff40d6e286eaf75467930eefba6ce7b48a8973fc82614f3dea75b10b49aa',
+        'USER': 'your user name',
+        'PASSWORD': 'your password',
     }
 }
 
@@ -225,8 +215,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'userpiyush6@gmail.com'
-EMAIL_HOST_PASSWORD = 'rezwfjagyrxxmebx'
+EMAIL_HOST_USER = 'your gmail email ID'
+EMAIL_HOST_PASSWORD = 'your gmail email access Token'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -240,11 +230,11 @@ django_heroku.settings(locals())
 #this will handle our amazon s3 bucket that will host our static files and user uploaded files on our website
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #setup your access key of your AWS (Amazon web services)
-AWS_ACCESS_KEY_ID = 'AKIAXJD4CDE4VCFD6EW5'
-AWS_SECRET_ACCESS_KEY = '3MuelBjVId7iiSkQg6dUERipQQ48sGCVbGw6GdZA'
+AWS_ACCESS_KEY_ID = 'your access key ID'
+AWS_SECRET_ACCESS_KEY = 'your secret key ID'
 
 #now assign your s3 bucket to this django project
-AWS_STORAGE_BUCKET_NAME = "devconnect-bucket68125"
+AWS_STORAGE_BUCKET_NAME = "your s3 bucket name"
 
 #add this so that you can access your uploaded images from amazon s3 bucket
 AWS_S3_REGION_NAME = "ap-south-1"
