@@ -1,4 +1,5 @@
-This is a devSearch repo that holds Dev Connect website source code. Here in this website young fledgling developers who are still doing their undergraduates can come and signup to this website and share their Projects to the world
+This repo contains the Dev Connect website's source code
+This is a website that allows young and fledgling developers to share their work with the rest of the world.
 
 here are some sample images :-
 ![](preview_images/1.png)
